@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="it">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="description" content="Breve descrizione per motori di ricerca e social (1–2 frasi sul lavoro).">
+  <meta name="keywords" content="keyword1, keyword2, keyword3">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Titolo del paper / progetto</title>
+
+  <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro" rel="stylesheet">
+  <link rel="stylesheet" href="./static/css/bulma.min.css">
+  <link rel="stylesheet" href="./static/css/bulma-carousel.min.css">
+  <link rel="stylesheet" href="./static/css/bulma-slider.min.css">
+  <link rel="stylesheet" href="./static/css/fontawesome.all.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+  <link rel="stylesheet" href="./static/css/index.css">
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script defer src="./static/js/fontawesome.all.min.js"></script>
+  <script src="./static/js/bulma-carousel.min.js"></script>
+  <script src="./static/js/bulma-slider.min.js"></script>
+  <script src="./static/js/index.js"></script>
+</head>
+
+<body>
+  <nav class="navbar" role="navigation" aria-label="main navigation">
+    <div class="navbar-brand">
+      <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false">
+        <span aria-hidden="true"></span>
+        <span aria-hidden="true"></span>
+        <span aria-hidden="true"></span>
+      </a>
+    </div>
+    <div class="navbar-menu">
+      <div class="navbar-start" style="flex-grow: 1; justify-content: center;">
+        <!-- Opzionale: link a lavori correlati o alla home del lab -->
+        <a class="navbar-item" href="#">Related / Lab</a>
+      </div>
+    </div>
+  </nav>
+
+  <section class="hero">
+    <div class="hero-body">
+      <div class="container is-max-desktop">
+        <div class="columns is-centered">
+          <div class="column has-text-centered">
+            <!-- Logo: opzionale; sostituire src o rimuovere il blocco -->
+            <!-- <img style="height:6vw; margin-bottom: 3px;" src="assets/images/logo.png" alt="Logo"> -->
+
+            <h1 class="title is-2 publication-title">Titolo del paper / progetto</h1>
+            <h2 class="title is-6 publication-title">Venue e anno (es. Conference 20XX)</h2>
+
+            <p class="is-size-7 has-text-grey mb-3">Sostituisci il titolo sopra; la riga venue è opzionale (conferenza, journal, workshop).</p>
+
+            <div class="is-size-5 publication-authors">
+              <span class="author-block"><i>Authors</i></span>
+            </div>
+            <p class="is-size-7 has-text-grey mb-3">Sostituisci <i>Authors</i> con l’elenco (es. più <code>span.author-block</code> con nome, link opzionale, apice affiliazione).</p>
+
+            <div class="is-size-6 publication-authors">
+              <span class="author-block">Affiliazione / istituzioni (usa <sup>1</sup> negli autori se servono più sedi)</span>
+            </div>
+            <p class="is-size-7 has-text-grey mb-4">Una riga per istituzione o unica affiliazione per tutti.</p>
+
+            <div class="column has-text-centered">
+              <div class="publication-links">
+                <span class="link-block">
+                  <a href="#" class="external-link button is-normal">
+                    <span class="icon"><i class="fas fa-file-pdf"></i></span>
+                    <span>Paper</span>
+                  </a>
+                </span>
+                <span class="link-block">
+                  <a href="#" class="external-link button is-normal">
+                    <span class="icon"><i class="ai ai-arxiv"></i></span>
+                    <span>arXiv</span>
+                  </a>
+                </span>
+                <span class="link-block">
+                  <a href="#" class="external-link button is-normal">
+                    <span class="icon"><i class="fab fa-github"></i></span>
+                    <span>Code</span>
+                  </a>
+                </span>
+              </div>
+              <p class="is-size-7 has-text-grey mt-2">Sostituisci <code>href="#"</code> con PDF, arXiv e repository.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section py-5" id="video">
+    <div class="container is-max-desktop">
+      <h2 class="title is-4 has-text-centered">Video</h2>
+      <p class="is-size-7 has-text-grey has-text-centered mb-4">
+        Subito sotto titolo e link: inserisci qui il teaser o il video principale (MP4 consigliato; oppure embed YouTube/Vimeo sostituendo il blocco <code>&lt;video&gt;</code> con un <code>iframe</code>).
+      </p>
+      <div class="columns is-centered">
+        <div class="column is-10-desktop is-12-tablet">
+          <figure class="has-text-centered">
+            <video controls playsinline style="width:100%; max-height:70vh;">
+              <source src="assets/videos/video.mp4" type="video/mp4">
+              Il browser non supporta il tag video.
+            </video>
+            <figcaption class="is-size-7 has-text-grey mt-3">Didascalia opzionale (cosa mostra il video).</figcaption>
+          </figure>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Teaser: figura o video principale + didascalia breve -->
+  <section class="section py-5">
+    <div class="container is-max-desktop">
+      <h2 class="title is-4 has-text-centered">Teaser</h2>
+      <p class="is-size-7 has-text-grey has-text-centered mb-4">Un’immagine ampia o uno schema del metodo; sotto, 2–3 frasi che spiegano cosa si vede.</p>
+      <!-- Esempio immagine: decommenta e imposta il percorso -->
+      <!-- <figure class="has-text-centered"><img src="assets/teaser.png" alt="Teaser" style="max-width:100%;"><figcaption class="is-size-6 mt-2">Didascalia.</figcaption></figure> -->
+    </div>
+  </section>
+
+  <section class="section py-5">
+    <div class="container is-max-desktop">
+      <div class="columns is-centered has-text-centered">
+        <div class="column is-four-fifths">
+          <h2 class="title is-3">Abstract</h2>
+          <p class="is-size-7 has-text-grey mb-4">Problema, idea principale, metodo in sintesi, risultato chiave (numeri se ci sono). Lunghezza tipica: 150–250 parole per paper; per progetto web può essere più corto.</p>
+          <div class="content has-text-justified">
+            <p>
+              [Inserisci qui l’abstract: contesto, gap, contributo, risultati principali e takeaway per il lettore.]
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section py-5">
+    <div class="container is-max-desktop">
+      <div class="columns is-centered has-text-centered">
+        <div class="column is-four-fifths">
+          <h2 class="title is-3">Introduzione</h2>
+          <p class="is-size-7 has-text-grey mb-4">Motivazione, contesto applicativo, cosa mancava nello stato dell’arte e quali domande affronti.</p>
+          <div class="content has-text-justified">
+            <p>[Testo introduzione.]</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section py-5">
+    <div class="container is-max-desktop">
+      <div class="columns is-centered has-text-centered">
+        <div class="column is-four-fifths">
+          <h2 class="title is-3">Metodo</h2>
+          <p class="is-size-7 has-text-grey mb-4">Architettura, notazione se serve, training o pipeline; figure che guidano passo passo.</p>
+          <div class="content has-text-justified">
+            <p>[Descrizione del metodo.]</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section py-5">
+    <div class="container is-max-desktop">
+      <div class="columns is-centered has-text-centered">
+        <div class="column is-four-fifths">
+          <h2 class="title is-3">Esperimenti e risultati</h2>
+          <p class="is-size-7 has-text-grey mb-4">Setup, metriche, confronti con baseline, analisi qualitative (tabelle, grafici, link a pagine demo se servono).</p>
+          <div class="content has-text-justified">
+            <p>[Risultati e discussione.]</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section py-5">
+    <div class="container is-max-desktop">
+      <div class="columns is-centered has-text-centered">
+        <div class="column is-four-fifths">
+          <h2 class="title is-3">Conclusioni</h2>
+          <p class="is-size-7 has-text-grey mb-4">Riassunto contributi, limiti, lavoro futuro.</p>
+          <div class="content has-text-justified">
+            <p>[Conclusioni.]</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="references">
+    <div class="container is-max-desktop content">
+      <h2 class="title is-3">Riferimenti (BibTeX)</h2>
+      <p class="is-size-7 has-text-grey mb-4">Blocco BibTeX per citare il lavoro da repository o articoli; aggiorna chiave, titolo, autori, venue, anno, DOI/arXiv.</p>
+      <pre><code>@article{chiave2026titolo,
+  title={Titolo completo del lavoro},
+  author={Authors},
+  journal={Nome venue},
+  year={2026},
+  url={https://example.org/paper}
+}</code></pre>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="content has-text-centered">
+        <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/">
+          <img alt="Creative Commons License" style="border-width:0"
+            src="https://i.creativecommons.org/l/by-sa/4.0/88x31.png" />
+        </a>
+      </div>
+      <div class="columns is-centered">
+        <div class="column is-8">
+          <div class="content">
+            <p>
+              Template adattato da <a href="https://github.com/concept-graphs/concept-graphs.github.io">Concept-Graph</a>
+              (<a href="http://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA 4.0</a>) e da
+              <a href="https://github.com/nerfies/nerfies.github.io">Nerfies</a>.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+</body>
+
+</html>
