@@ -1,12 +1,12 @@
 <!DOCTYPE html>
-<html lang="it">
+<html lang="en">
 
 <head>
   <meta charset="utf-8">
-  <meta name="description" content="Breve descrizione per motori di ricerca e social (1–2 frasi sul lavoro).">
-  <meta name="keywords" content="keyword1, keyword2, keyword3">
+  <meta name="description" content="Multi-modal semantic audio-driven humanoid control: music fingerprinting and speech grounding for real-time skill selection on Unitree G1, with code on GitHub.">
+  <meta name="keywords" content="Humanoid Robots, Semantic Whole Body Control, Motion Imitation">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Titolo del paper / progetto</title>
+  <title>Semantic Audio-driven Understanding for Dynamic Humanoid Whole Body Control</title>
 
   <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro" rel="stylesheet">
   <link rel="stylesheet" href="./static/css/bulma.min.css">
@@ -48,20 +48,23 @@
             <!-- Logo: opzionale; sostituire src o rimuovere il blocco -->
             <!-- <img style="height:6vw; margin-bottom: 3px;" src="assets/images/logo.png" alt="Logo"> -->
 
-            <h1 class="title is-2 publication-title">Titolo del paper / progetto</h1>
-            <h2 class="title is-6 publication-title">Venue e anno (es. Conference 20XX)</h2>
-
-            <p class="is-size-7 has-text-grey mb-3">Sostituisci il titolo sopra; la riga venue è opzionale (conferenza, journal, workshop).</p>
+            <h1 class="title is-2 publication-title">Semantic Audio-driven Understanding for Dynamic Humanoid Whole Body Control</h1>
+            <h2 class="title is-6 publication-title">RCS 2026 · Paper 55</h2>
 
             <div class="is-size-5 publication-authors">
-              <span class="author-block"><i>Authors</i></span>
+              <span class="author-block">J. Marcelo<sup>1</sup></span>,
+              <span class="author-block">M. Brienza<sup>1</sup></span>,
+              <span class="author-block">E. Bugli<sup>1</sup></span>,
+              <span class="author-block">L. Comito<sup>1</sup></span>,
+              <span class="author-block">D. Nardi<sup>1</sup></span>,
+              <span class="author-block">D. D. Bloisi<sup>2</sup></span>, and
+              <span class="author-block">V. Suriani<sup>1</sup></span>
             </div>
-            <p class="is-size-7 has-text-grey mb-3">Sostituisci <i>Authors</i> con l’elenco (es. più <code>span.author-block</code> con nome, link opzionale, apice affiliazione).</p>
 
-            <div class="is-size-6 publication-authors">
-              <span class="author-block">Affiliazione / istituzioni (usa <sup>1</sup> negli autori se servono più sedi)</span>
+            <div class="is-size-6 publication-authors mt-3">
+              <span class="author-block"><sup>1</sup> Dept. of Computer, Control, and Management Engineering, Sapienza University of Rome, Rome (Italy)</span><br>
+              <span class="author-block"><sup>2</sup> Dept. of International Humanities and Social Sciences, International University of Rome, Rome (Italy)</span>
             </div>
-            <p class="is-size-7 has-text-grey mb-4">Una riga per istituzione o unica affiliazione per tutti.</p>
 
             <div class="column has-text-centered">
               <div class="publication-links">
@@ -78,13 +81,13 @@
                   </a>
                 </span>
                 <span class="link-block">
-                  <a href="#" class="external-link button is-normal">
+                  <a href="https://github.com/Lab-RoCoCo-Sapienza/semantic-WBC" class="external-link button is-normal" rel="noopener noreferrer" target="_blank">
                     <span class="icon"><i class="fab fa-github"></i></span>
                     <span>Code</span>
                   </a>
                 </span>
               </div>
-              <p class="is-size-7 has-text-grey mt-2">Sostituisci <code>href="#"</code> con PDF, arXiv e repository.</p>
+              <p class="is-size-7 has-text-grey mt-2">Supplementary materials: <a href="https://github.com/Lab-RoCoCo-Sapienza/semantic-WBC" rel="noopener noreferrer" target="_blank">github.com/Lab-RoCoCo-Sapienza/semantic-WBC</a></p>
             </div>
           </div>
         </div>
@@ -127,10 +130,10 @@
       <div class="columns is-centered has-text-centered">
         <div class="column is-four-fifths">
           <h2 class="title is-3">Abstract</h2>
-          <p class="is-size-7 has-text-grey mb-4">Problema, idea principale, metodo in sintesi, risultato chiave (numeri se ci sono). Lunghezza tipica: 150–250 parole per paper; per progetto web può essere più corto.</p>
           <div class="content has-text-justified">
             <p>
-              [Inserisci qui l’abstract: contesto, gap, contributo, risultati principali e takeaway per il lettore.]
+              Recent advances in humanoid robotics and reinforcement learning have enabled the acquisition of highly expressive whole-body motion policies. However, most robotic performances remain based on pre-scripted sequences or externally triggered behaviors, limiting autonomy and responsiveness to dynamic environments. In this work, we introduce a novel multi-modal orchestration framework for semantic audio-driven humanoid control, enabling robots to autonomously select and execute appropriate motion skills in real time. The system processes continuous audio streams and routes them into music or speech branches. Music input is handled via audio fingerprinting and semantic embeddings to retrieve track identity and temporal alignment, allowing dynamic mapping between musical segments and motion policies. Speech input is grounded into a discrete library of imitation-learned skills, enabling direct human-robot interaction. Both modalities share a unified interface that schedules skill execution over a reinforcement learning control pipeline. We validate the approach in simulation and on a Unitree G1 humanoid, showing robust sim-to-real transfer and consistent audio-conditioned policy selection. Supplementary materials are available at the following site:
+              <a href="https://github.com/Lab-RoCoCo-Sapienza/semantic-WBC" rel="noopener noreferrer" target="_blank">https://github.com/Lab-RoCoCo-Sapienza/semantic-WBC</a>
             </p>
           </div>
         </div>
@@ -198,12 +201,12 @@
     <div class="container is-max-desktop content">
       <h2 class="title is-3">Riferimenti (BibTeX)</h2>
       <p class="is-size-7 has-text-grey mb-4">Blocco BibTeX per citare il lavoro da repository o articoli; aggiorna chiave, titolo, autori, venue, anno, DOI/arXiv.</p>
-      <pre><code>@article{chiave2026titolo,
-  title={Titolo completo del lavoro},
-  author={Authors},
-  journal={Nome venue},
+      <pre><code>@inproceedings{marcelo2026semantic,
+  title={{Semantic Audio-driven Understanding for Dynamic Humanoid Whole Body Control}},
+  author={Marcelo, J. and Brienza, M. and Bugli, E. and Comito, L. and Nardi, D. and Bloisi, D. D. and Suriani, V.},
+  booktitle={{RCS}},
   year={2026},
-  url={https://example.org/paper}
+  url={https://github.com/Lab-RoCoCo-Sapienza/semantic-WBC}
 }</code></pre>
     </div>
   </section>
