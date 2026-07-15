@@ -2,7 +2,7 @@
 
 **Semantic Whole-Body Control for Unitree G1** — music and audio drive BeyondMimic motion policies over a split robot / PC pipeline.
 
-Built on [RoboJuDo](https://github.com/HansZ8/RoboJuDo). This repository is the **standalone deploy bundle**: Python code, configs, and scripts. Policy weights and audio assets are downloaded separately (see [Releases](https://github.com/Lab-RoCoCo-Sapienza/semantic-WBC/releases)).
+Built on [RoboJuDo](https://github.com/HansZ8/RoboJuDo). This repository is the **standalone deploy bundle**: Python code, configs, and scripts. Base RoboJuDo assets are pulled from upstream on install; demo-specific ONNX and audio can be added via an optional extras zip (see [MANIFEST.md](MANIFEST.md)).
 
 ---
 
@@ -59,17 +59,29 @@ pip install -r requirements-listener.txt   # PC listener only
 python submodule_install.py unitree_cpp
 ```
 
-### 2. Download assets (ONNX, meshes, audio, Shazam index)
+### 2. Download assets
 
-Binary files are **not** stored in git:
+Binary files are **not** in git. `./install_assets.sh` does two steps:
+
+1. **Base** (always) — sparse clone from [HansZ8/RoboJuDo](https://github.com/HansZ8/RoboJuDo) `release`: MuJoCo meshes, Walk/Stand `.pt`, Jump/Dance/Violin ONNX. Enough for `g1_beyondmimic` / `g1_switch`.
+2. **Extras** (optional) — semantic-WBC demo zip: thriller/salsa/dynamite/gesti ONNX, `mp3_songs/`, Shazam index. Needed for `g1_switch_beyondmimic`, music demos, real gesti deploy.
 
 ```bash
+python submodule_install.py mujoco_viewer   # sim viewer
 ./install_assets.sh
 ```
 
-See [MANIFEST.md](MANIFEST.md) for what is required on each machine.
+After a [GitHub Release](https://github.com/Lab-RoCoCo-Sapienza/semantic-WBC/releases) with `robojudo-assets-v1.5.0.zip` is published, step 2 downloads automatically. Until then:
 
-> Until a [GitHub Release](https://github.com/Lab-RoCoCo-Sapienza/semantic-WBC/releases) with `robojudo-assets-v1.5.0.zip` is published, set `ROBOJUDO_ASSETS_URL` to a local or mirror URL.
+```bash
+# local zip or mirror
+ROBOJUDO_ASSETS_URL="file:///path/to/robojudo-assets-v1.5.0.zip" ./install_assets.sh
+
+# upstream only (no demo ONNX / no mp3)
+ROBOJUDO_SKIP_EXTRAS=1 ./install_assets.sh
+```
+
+The script prints what is still missing. See [MANIFEST.md](MANIFEST.md) for the full inventory.
 
 ### 3. Run the demo
 
@@ -105,6 +117,12 @@ Replace `<PC_IP>` with the listener machine address. Start the listener before o
 ---
 
 ## Simulation (single machine)
+
+If MuJoCo fails with `Failed to open display :0`, your X server may be on another display (e.g. `:1`):
+
+```bash
+export DISPLAY=:1   # adjust if needed; check ls /tmp/.X11-unix/
+```
 
 ```bash
 # Terminal 1
@@ -159,6 +177,18 @@ semantic-WBC/
 | [DEPLOY.md](DEPLOY.md) | Two-machine setup, install matrix |
 | [PIPELINE.md](PIPELINE.md) | Install, sim, Docker, troubleshooting |
 | [MANIFEST.md](MANIFEST.md) | Asset bundle contents and download |
+
+## Publishing assets (maintainers)
+
+Binaries stay out of git (~120 MB zip). To ship them to users:
+
+```bash
+# with mp3_songs/, shazam indices, and demo ONNX already in the tree (see MANIFEST.md)
+./package_assets.sh
+gh release create v1.5.0 dist/robojudo-assets-v1.5.0.zip --title "Assets v1.5.0"
+```
+
+Users then run `./install_assets.sh` and receive base + extras automatically.
 
 ---
 

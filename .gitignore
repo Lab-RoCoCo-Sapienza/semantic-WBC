@@ -11,6 +11,10 @@ demo/*
 !demo/.gitkeep
 real_try_trimmed_minus2s.mp3
 
+logs/
+*.egg-info/
+assets/motions/
+
 __pycache__/
 *.py[cod]
 .venv/

@@ -1,16 +1,19 @@
 # RoboJuDo — external assets (not in git)
 
-Large binaries are **not** committed to the repository. They are published as a **GitHub Release** zip and installed via link:
+Large binaries are **not** committed to this repository. Install them with:
 
 ```bash
-./release/install_assets.sh
+./install_assets.sh
 ```
 
-Direct download (after you publish release `v1.5.0`):
+## Two-tier layout
 
-**https://github.com/michelebri/RoboJuDo/releases/download/v1.5.0/robojudo-assets-v1.5.0.zip**
+| Tier | Source | Installed by | Enough for |
+|------|--------|--------------|------------|
+| **Base** | [HansZ8/RoboJuDo](https://github.com/HansZ8/RoboJuDo) `release` | always | MuJoCo sim, Walk/Stand, `g1_beyondmimic`, `g1_switch` |
+| **Extras** | semantic-WBC zip (optional) | when URL/file is available | `g1_switch_beyondmimic`, music/Shazam demos, real gesti deploy |
 
-See [assets_urls.yaml](assets_urls.yaml) for the canonical URL config.
+See [assets_urls.yaml](assets_urls.yaml) for URLs and env vars (`ROBOJUDO_ASSETS_URL`, `ROBOJUDO_SKIP_EXTRAS`).
 
 ---
 
@@ -32,10 +35,11 @@ See [assets_urls.yaml](assets_urls.yaml) for the canonical URL config.
 
 | Goal | Download | Extra steps |
 |------|----------|-------------|
-| Keyboard sim only | full zip (or models + mujoco subsets) | none |
-| Real robot + remote listener | models ONNX only from zip | `unitree_cpp` on robot |
-| Music → policy demo | full zip | none if using pre-built Shazam index |
-| Music demo, no pre-built index | models + mujoco + `mp3_songs/` | run Shazam build commands below |
+| Keyboard sim (base) | `./install_assets.sh` | none — uses upstream RoboJuDo assets |
+| Keyboard sim (semantic demo motions) | base + extras ONNX | copy or overlay demo `.onnx` files |
+| Real robot + remote listener | base + extras ONNX | `unitree_cpp` on robot |
+| Music → policy demo | base + extras zip | none if using pre-built Shazam index |
+| Music demo, no pre-built index | base + `mp3_songs/` | run Shazam build commands below |
 
 ### Rebuild Shazam index (instead of downloading pre-built)
 
@@ -78,17 +82,26 @@ python shazam/run_experiment.py --build-clap-index \
 
 ## Maintainer: publish a new release
 
+**Do not commit** `assets/models/`, `mp3_songs/`, or `shazam/index.pkl` to git. Ship them as a Release zip.
+
+Prerequisites in the working tree (copy from a machine that has the full demo, or rebuild Shazam from mp3):
+
 ```bash
-# 1. Build index if needed
-python shazam/run_experiment.py --build-index --songs-dir mp3_songs --index-path shazam/index.pkl
-python shazam/run_experiment.py --build-clap-index --songs-dir mp3_songs --clap-index shazam/clap_index.json
-
-# 2. Build zip (output: release/dist/ — gitignored)
-./release/package_assets.sh
-
-# 3. Create GitHub Release v1.5.0 and attach release/dist/robojudo-assets-v1.5.0.zip
-gh release create v1.5.0 release/dist/robojudo-assets-v1.5.0.zip --title "Assets v1.5.0"
+# optional if index not already present
+python shazam/run_experiment.py --build-index \
+  --songs-dir mp3_songs --index-path shazam/index.pkl
+python shazam/run_experiment.py --build-clap-index \
+  --songs-dir mp3_songs --clap-index shazam/clap_index.json
 ```
+
+Build and upload (~120 MB):
+
+```bash
+./package_assets.sh
+gh release create v1.5.0 dist/robojudo-assets-v1.5.0.zip --title "Assets v1.5.0"
+```
+
+After publishing, `./install_assets.sh` on a fresh clone fetches HansZ8 base assets **and** overlays this zip automatically.
 
 Update [assets_urls.yaml](assets_urls.yaml) if the tag or repo changes.
 

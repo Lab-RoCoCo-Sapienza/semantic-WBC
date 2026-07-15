@@ -1,14 +1,32 @@
-# External asset URLs — not stored in git.
-# Upload zip via: ./package_assets.sh → attach to GitHub Release
+# External asset sources — binaries are not stored in git.
 
 version: "1.5.0"
 
-base_url: "https://github.com/Lab-RoCoCo-Sapienza/semantic-WBC/releases/download/v1.5.0"
+# Always fetched by ./install_assets.sh (public upstream RoboJuDo release).
+upstream:
+  repo: "https://github.com/HansZ8/RoboJuDo.git"
+  ref: "release"
+  paths:
+    - assets
+  provides:
+    - assets/models/g1/unitree/*.pt
+    - assets/models/g1/beyondmimic/{Jump_wose,Dance_wose,Violin,Waltz}.onnx
+    - assets/robots/g1/
+    - other RoboJuDo policy checkpoints (ASAP, AMO, H2H, ...)
 
-bundles:
-  full:
-    file: robojudo-assets-v1.5.0.zip
-    size_mb: 109
-    sha256: ""
-    description: >
-      Models (ONNX, Unitree .pt), MuJoCo G1 meshes, mp3_songs, Shazam indices, demo mashup.
+# Optional overlay for semantic-WBC demo-specific files (not in upstream).
+extras:
+  base_url: "https://github.com/Lab-RoCoCo-Sapienza/semantic-WBC/releases/download/v1.5.0"
+  file: robojudo-assets-v1.5.0.zip
+  size_mb: 109
+  sha256: ""
+  optional: true
+  provides:
+    - demo BeyondMimic ONNX (thriller, salsa, dynamite, gesti, 67, ...)
+    - mp3_songs/
+    - shazam/index.pkl, clap_index.json, clap_index.npy
+    - demo/real_try_trimmed_minus2s.mp3
+  install:
+    - "./install_assets.sh"
+    - "ROBOJUDO_ASSETS_URL=file:///path/to/robojudo-assets-v1.5.0.zip ./install_assets.sh"
+    - "ROBOJUDO_SKIP_EXTRAS=1 ./install_assets.sh  # upstream only"

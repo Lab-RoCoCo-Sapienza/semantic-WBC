@@ -94,27 +94,29 @@ Typical split setup:
 
 ## 3. Installation
 
-### 3.0 External assets (GitHub Release — not in git)
+### 3.0 External assets (not in git)
 
-ONNX, audio, Shazam indices, and MuJoCo meshes are **not** in the repository. Download from GitHub Releases:
+Base RoboJuDo assets come from upstream; semantic-WBC demo extras are optional:
 
 ```bash
-cd RoboJuDo
-./release/install_assets.sh
+cd semantic-WBC
+./install_assets.sh
 ```
 
-Direct link (after publishing release `v1.5.0`):
+Optional overlay when you have the extras zip:
 
-`https://github.com/michelebri/RoboJuDo/releases/download/v1.5.0/robojudo-assets-v1.5.0.zip`
+```bash
+ROBOJUDO_ASSETS_URL="file:///path/to/robojudo-assets-v1.5.0.zip" ./install_assets.sh
+```
 
-See `release/MANIFEST.md` for **what is required vs optional** per pipeline (sim-only, real robot, music demo).
+See `MANIFEST.md` and `assets_urls.yaml` for **what is required vs optional** per pipeline (sim-only, real robot, music demo).
 
 ### 3.1 Clone
 
 ```bash
 git clone <REPO_URL> RoboJuDo
 cd RoboJuDo
-./release/install_assets.sh   # if assets not in main repo
+./install_assets.sh   # if assets not downloaded yet
 ```
 
 If the repo uses submodules:
@@ -628,7 +630,7 @@ python -c "from robojudo.config.config_manager import ConfigManager; print('Use 
 | Symptom | Fix |
 |---------|-----|
 | `ImportError: unitree_cpp` | Install `unitree_sdk2`, then `python submodule_install.py unitree_cpp` |
-| MuJoCo window does not open | Set `MUJOCO_GL=glfw`; on Docker use X11 + `xhost +local:docker` |
+| MuJoCo window does not open / `Failed to open display :0` | Check `ls /tmp/.X11-unix/` (`X1` → `export DISPLAY=:1`); or `ROBOJUDO_HEADLESS=1` + `g1_shazam_remote_listener_headless`; Docker: X11 + `xhost +local:docker` |
 | Shazam always wrong / low votes | Rebuild index; use `--segment-seconds 10`, `--min-votes 10`, `--clap-fallback` |
 | TCP connection refused | Start listener **before** sim; check firewall on port 8765 |
 | Policy IDs do not match song | Align `--song-to-policy` with the **active config** policy list |
@@ -658,13 +660,11 @@ python -c "from robojudo.config.config_manager import ConfigManager; print('Use 
 
 ```bash
 # 1. Install
-python3 -m venv .venv_robojudo && source .venv_robojudo/bin/activate
+python3 -m venv .venv && source .venv/bin/activate
 pip install -e . && python submodule_install.py mujoco_viewer
+./install_assets.sh   # HansZ8 base + semantic-WBC extras zip when Release exists
 
-# 2. Shazam index
-python shazam/run_experiment.py --build-index --songs-dir mp3_songs --index-path shazam/index.pkl
-
-# 3. Terminal 1 — sim
+# 2. Terminal 1 — sim (set DISPLAY if needed, e.g. export DISPLAY=:1)
 python scripts/run_pipeline.py -c g1_shazam_remote_listener
 
 # 4. Terminal 2 — offline mashup demo
