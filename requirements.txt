@@ -1,0 +1,44 @@
+torch
+# Silero VAD (torch.hub snakers4/silero-vad) in scripts/listen_routed_speech_or_music.py
+torchaudio
+scipy
+onnxruntime
+onnx
+joblib
+pyyaml
+easydict
+python-box
+tqdm
+pygame
+zmq
+pynput
+pydantic
+mujoco
+mujoco-python-viewer
+glfw
+msgpack
+msgpack-numpy
+colorlog
+
+# Live mic capture for scripts/listen_shazam_and_send.py (PortAudio; same stack as g1_unint).
+sounddevice
+
+# Song fingerprinting / recognition: https://abracadabra.readthedocs.io/en/latest/usage/getstarted.html
+# PyPI abracadabra==0.0.7 pins old matplotlib and breaks on newer Python; use upstream master.
+abracadabra @ https://github.com/notexactlyawe/abracadabra/archive/refs/heads/master.tar.gz
+simple-settings
+# stdlib `audioop` still exists on 3.12; this backport is for 3.13+ (PEP 594).
+audioop-lts; python_version >= "3.13"
+
+# Optional: unofficial Shazam client, used by shazam/shazamio_cross_check.py.
+shazamio
+
+# CLAP audio-text embedding fallback (shazam/clap_fallback.py). First use downloads model weights.
+transformers
+
+# Rhythm/BPM feature extraction + lightweight classifiers (policy-by-category)
+librosa
+scikit-learn
+
+# Real pipeline timelines (event_times JSON) — scripts/plot_event_times_real_plotly.py
+plotly>=5.18

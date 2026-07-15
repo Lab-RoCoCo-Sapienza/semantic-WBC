@@ -1,0 +1,17 @@
+# Downloaded / generated — not in git
+dist/
+assets/models/
+assets/robots/
+mp3_songs/*
+!mp3_songs/.gitkeep
+shazam/index.pkl
+shazam/clap_index.json
+shazam/clap_index.npy
+demo/*
+!demo/.gitkeep
+real_try_trimmed_minus2s.mp3
+
+__pycache__/
+*.py[cod]
+.venv/
+.venv_robojudo/

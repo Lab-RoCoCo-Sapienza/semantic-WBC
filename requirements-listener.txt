@@ -1,0 +1,4 @@
+# PC listener extras (install after: pip install -e .)
+sounddevice
+transformers
+openai
