@@ -1,101 +1,184 @@
-# RoboJuDo — release standalone
+# semantic-WBC
 
-Cartella **autocontenuta** da pubblicare su GitHub: contiene **codice + documentazione**, non i binari pesanti (ONNX, mp3, mesh).
+**Semantic Whole-Body Control for Unitree G1** — music and audio drive BeyondMimic motion policies over a split robot / PC pipeline.
 
-Puoi clonare **solo questa cartella** (o il repo che la espone) su **robot e PC** — stesso contenuto, script diversi.
-
-## Cosa c'è dentro (codice)
-
-| Path | Cosa fa |
-|------|---------|
-| `robojudo/` | Framework pipeline, config G1, policy, controller, env |
-| `scripts/run_pipeline_safe.py` | **Robot** — esecuzione su G1 reale |
-| `scripts/run_pipeline.py` | **Sim** — MuJoCo |
-| `scripts/listen_smart_mic_timed_policy.py` | **PC** — listener audio → TCP |
-| `scripts/listen_smart_mic.py` | Dipendenza del listener |
-| `scripts/listen_shazam_and_send.py` | Listener Shazam alternativo |
-| `shazam/` | Matcher locale (+ indici scaricati con `install_assets.sh`) |
-| `listen_openai_and_send_gesti/` | Listener voce → `[GESTI,sec]` |
-| `packages/unitree_cpp/` | Binding robot (solo onboard G1) |
-| `third_party/mujoco_viewer/` | Viewer sim |
-| `pyproject.toml`, `requirements.txt` | Install Python |
-
-## Cosa NON c'è in git (download separato)
-
-ONNX, `.pt`, mp3, mesh STL, `shazam/index.pkl` → **GitHub Release**:
-
-```bash
-./install_assets.sh
-```
-
-Vedi [MANIFEST.md](MANIFEST.md).
+Built on [RoboJuDo](https://github.com/HansZ8/RoboJuDo). This repository is the **standalone deploy bundle**: Python code, configs, and scripts. Policy weights and audio assets are downloaded separately (see [Releases](https://github.com/Lab-RoCoCo-Sapienza/semantic-WBC/releases)).
 
 ---
 
-## Installazione rapida (robot o PC)
+## Overview
+
+| Component | Role |
+|-----------|------|
+| **Robot (G1 PC2)** | Runs multi-policy RL pipeline, executes ONNX motions, connects to PC over TCP |
+| **PC (listener)** | Captures audio (mic or offline mashup), identifies songs, sends policy commands |
+| **Simulation (optional)** | MuJoCo multi-policy demo on a workstation |
+
+The same repository is cloned on both machines. Only the entry script differs.
+
+```
+┌──────────────────────┐      TCP :8765       ┌─────────────────────────┐
+│  Unitree G1 (PC2)    │ ◄─────────────────── │  Demo PC                │
+│  run_pipeline_safe   │   [POLICY_SWITCH],N  │  listen_smart_mic_*     │
+│  BeyondMimic ONNX    │   [GESTI, seconds]   │  mic / offline mashup   │
+└──────────────────────┘                      └─────────────────────────┘
+```
+
+---
+
+## Requirements
+
+| | Robot | PC listener | Sim only |
+|---|:---:|:---:|:---:|
+| Python ≥ 3.10 | ✓ | ✓ | ✓ |
+| [unitree_sdk2](https://github.com/unitreerobotics/unitree_sdk2) + `unitree_cpp` | ✓ | | |
+| CUDA (recommended) | | ✓ | ✓ |
+| `ffmpeg` | | ✓ | |
+| Microphone / speakers | | ✓ | |
+
+---
+
+## Quick start
+
+### 1. Clone and install
 
 ```bash
-git clone <URL-REPO-RELEASE> RoboJuDo
-cd RoboJuDo
+git clone https://github.com/Lab-RoCoCo-Sapienza/semantic-WBC.git
+cd semantic-WBC
 
-python3 -m venv .venv && source .venv/bin/activate
+python3 -m venv .venv
+source .venv/bin/activate   # Windows: .venv\Scripts\activate
+
 pip install -e .
-pip install -r requirements-listener.txt   # solo sul PC listener
+pip install -r requirements-listener.txt   # PC listener only
+```
 
-# Robot onboard:
+**Robot onboard** — after installing the Unitree C++ SDK:
+
+```bash
 python submodule_install.py unitree_cpp
+```
 
-# Binari (ONNX, audio, mesh):
+### 2. Download assets (ONNX, meshes, audio, Shazam index)
+
+Binary files are **not** stored in git:
+
+```bash
 ./install_assets.sh
 ```
 
----
+See [MANIFEST.md](MANIFEST.md) for what is required on each machine.
 
-## Cosa lanciare
+> Until a [GitHub Release](https://github.com/Lab-RoCoCo-Sapienza/semantic-WBC/releases) with `robojudo-assets-v1.5.0.zip` is published, set `ROBOJUDO_ASSETS_URL` to a local or mirror URL.
 
-### Robot (G1 PC2)
+### 3. Run the demo
+
+**Terminal 1 — robot (G1 PC2)**
 
 ```bash
 python scripts/run_pipeline_safe.py \
   -c g1_gesti_multi_real \
-  --cmd-server-host <IP_PC> \
+  --cmd-server-host <PC_IP> \
   --cmd-server-port 8765 \
   --cmd-subscribe-topic gesture \
   --cmd-duration-unit seconds
 ```
 
-### PC (listener)
+**Terminal 2 — PC listener**
 
 ```bash
 python scripts/listen_smart_mic_timed_policy.py \
-  --verbose --tcp-mode server --server-host 0.0.0.0 --server-port 8765 \
-  --clap-fallback --music-only \
+  --verbose \
+  --tcp-mode server \
+  --server-host 0.0.0.0 \
+  --server-port 8765 \
+  --clap-fallback \
+  --music-only \
   --offline-mashup demo/real_try_trimmed_minus2s.mp3 \
   --offline-playback \
-  --song-to-policy "thriller:4,salsa:2,dynamite:3"
+  --song-to-policy "thriller:4,salsa:2,dynamite:3" \
+  --final-policy-id 0
 ```
 
-Stesso repo su entrambe le macchine. Dettagli: [DEPLOY.md](DEPLOY.md).
+Replace `<PC_IP>` with the listener machine address. Start the listener before or together with the robot pipeline.
 
 ---
 
-## Documentazione
-
-| File | Contenuto |
-|------|-----------|
-| [DEPLOY.md](DEPLOY.md) | Robot vs PC, stesso repo |
-| [PIPELINE.md](PIPELINE.md) | Tutti i comandi (sim, Docker, real) |
-| [MANIFEST.md](MANIFEST.md) | Asset esterni, cosa serve davvero |
-
----
-
-## Maintainer (repo principale)
-
-Dopo modifiche al codice nel repo full:
+## Simulation (single machine)
 
 ```bash
-./release/sync_deploy_code.sh    # copia codice aggiornato in release/
-./release/package_assets.sh      # zip ONNX/audio → release/dist/
+# Terminal 1
+python scripts/run_pipeline.py -c g1_shazam_remote_listener
+
+# Terminal 2
+python scripts/listen_shazam_and_send.py \
+  --client-host 127.0.0.1 \
+  --client-port 8765 \
+  --song-to-policy "dynamite:3,swim:5,salsa:7,thriller:6"
 ```
 
-Poi push `release/` su GitHub e allega `release/dist/*.zip` alla Release.
+Keyboard sim without audio: `python scripts/run_pipeline.py -c g1_switch_beyondmimic`
+
+---
+
+## Repository layout
+
+```
+semantic-WBC/
+├── robojudo/              # Pipeline, policies, controllers, G1 configs
+├── scripts/               # Entry points (robot, sim, listener)
+├── shazam/                # Local audio fingerprint matcher
+├── packages/unitree_cpp/  # G1 onboard SDK binding
+├── third_party/           # MuJoCo viewer (sim)
+├── install_assets.sh      # Download ONNX / audio / meshes
+├── DEPLOY.md              # Robot vs PC deployment
+├── PIPELINE.md            # Full command reference
+└── MANIFEST.md            # External assets inventory
+```
+
+---
+
+## Policy mapping (`g1_gesti_multi_real`)
+
+| ID | Motion | Remote / joystick |
+|----|--------|-------------------|
+| 0 | Stand | `B` |
+| 1 | Gesti | `[GESTI,*]` / `X` |
+| 2 | Salsa | `Up` |
+| 3 | Dynamite | `Left` |
+| 4 | Thriller | `Right` |
+| 5 | 67 | `Down` / `[67]` |
+| 6 | Violin | `L1` / `[Violin]` |
+
+---
+
+## Documentation
+
+| Document | Description |
+|----------|-------------|
+| [DEPLOY.md](DEPLOY.md) | Two-machine setup, install matrix |
+| [PIPELINE.md](PIPELINE.md) | Install, sim, Docker, troubleshooting |
+| [MANIFEST.md](MANIFEST.md) | Asset bundle contents and download |
+
+---
+
+## Safety (real robot)
+
+Before running on hardware:
+
+1. Enable **Debug / Developer mode** on the G1.
+2. Clear the workspace and verify **E-stop**.
+3. Read the startup checklist in upstream [g1 real deploy docs](https://github.com/HansZ8/RoboJuDo/blob/release/docs/g1_real_safe_startup.md).
+
+---
+
+## Citation & credits
+
+- **RoboJuDo** — [HansZ8/RoboJuDo](https://github.com/HansZ8/RoboJuDo)
+- **Lab-RoCoCo, Sapienza University of Rome**
+
+---
+
+## License
+
+See upstream RoboJuDo and bundled third-party packages (`packages/unitree_cpp`, `third_party/mujoco_viewer`) for their respective licenses.

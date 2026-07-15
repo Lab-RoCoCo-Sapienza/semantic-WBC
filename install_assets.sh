@@ -16,7 +16,7 @@ else
 fi
 
 VERSION="${ROBOJUDO_ASSETS_VERSION:-1.5.0}"
-BASE_URL="${ROBOJUDO_ASSETS_BASE_URL:-https://github.com/michelebri/RoboJuDo/releases/download/v${VERSION}}"
+BASE_URL="${ROBOJUDO_ASSETS_BASE_URL:-https://github.com/Lab-RoCoCo-Sapienza/semantic-WBC/releases/download/v${VERSION}}"
 ZIP_NAME="${ROBOJUDO_ASSETS_ZIP:-robojudo-assets-v${VERSION}.zip}"
 URL="${ROBOJUDO_ASSETS_URL:-${BASE_URL}/${ZIP_NAME}}"
 

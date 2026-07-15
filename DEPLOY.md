@@ -9,7 +9,7 @@
 ## Two machines, one repo
 
 ```text
-                    SAME REPO: github.com/michelebri/RoboJuDo
+                    SAME REPO: github.com/Lab-RoCoCo-Sapienza/semantic-WBC
                                     │
             ┌───────────────────────┴───────────────────────┐
             ▼                                               ▼

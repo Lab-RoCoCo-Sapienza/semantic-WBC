@@ -1,19 +1,14 @@
 # External asset URLs — not stored in git.
-# Upload the zip built by release/package_assets.sh to GitHub Releases, then set tag/version here.
+# Upload zip via: ./package_assets.sh → attach to GitHub Release
 
 version: "1.5.0"
 
-# GitHub Release download (update tag when you publish a new release)
-base_url: "https://github.com/michelebri/RoboJuDo/releases/download/v1.5.0"
+base_url: "https://github.com/Lab-RoCoCo-Sapienza/semantic-WBC/releases/download/v1.5.0"
 
 bundles:
   full:
     file: robojudo-assets-v1.5.0.zip
     size_mb: 109
-    sha256: ""  # optional: fill after upload for integrity check
+    sha256: ""
     description: >
-      Complete bundle — models, MuJoCo G1, audio, Shazam indices, demo mashup.
-      Use for simulation + music-driven demos.
-
-# Direct link (computed)
-# url: https://github.com/michelebri/RoboJuDo/releases/download/v1.5.0/robojudo-assets-v1.5.0.zip
+      Models (ONNX, Unitree .pt), MuJoCo G1 meshes, mp3_songs, Shazam indices, demo mashup.
